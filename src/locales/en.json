@@ -37,6 +37,9 @@
      "list_ingredient":"List the ingredients separated by commas",
      "enter_title": "Enter the title of the recipe",
      "chose_category": "Choose a type ",
-     "nom_categorie": "Enter the category name"
+     "nom_categorie": "Enter the category name",
+     "recipe_added_success": "Recipe added successfully",
+     "error_adding_recipe": "Error when adding recipe",
+     "please_try_again": "please try again"
     
 }

@@ -6,7 +6,7 @@
     "choose_type": "Choisir un type",
     "starter": "Entrée",
     "main": "Plat",
-    "dessert": "Dessert",
+    "dessert": "dessert",
     "submit": "Ajouter",
     "success_message": "Recette ajoutée avec succès !",
     "editRecipe": "modifier recette",
@@ -38,6 +38,9 @@
     "list_ingredient":"Listez les ingrédients séparés par des virgules",
     "enter_title":"Entrez le titre de la recette",
     "chose_category":"Choisissez une catégorie",
-    "nom_categorie":"Entrez le nom de la catégorie"
+    "nom_categorie":"Entrez le nom de la catégorie",
+    "recipe_added_success": "Recette ajouté avec succé",
+    "error_adding_recipe": "Une erreur est survenu lors de l'ajout de recette",
+    "please_try_again":"s'il vous plais  veuillez ressayer ulterieurement"
     
 }

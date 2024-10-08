@@ -15,16 +15,17 @@
       </svg>
       {{ $t("recipe_list_title") }}
     </h2>
-
-    <!-- Bouton pour ajouter une nouvelle recette -->
+    <div v-if="successMessage" class="mt-4 alert alert-success">
+      {{ successMessage }}
+    </div>
     <router-link to="/add-recipe" class="btn btn-primary mb-3">
-      <i class="bi bi-plus-circle"></i> {{ $t('add_recipe') }}
+      <i class="bi bi-plus-circle"></i> {{ $t("add_recipe") }}
     </router-link>
 
     <input
       type="text"
       v-model="searchQuery"
-      :placeholder="$t('search_recipe') "
+      :placeholder="$t('search_recipe')"
       class="form-control mb-4 search-input"
     />
 
@@ -49,7 +50,6 @@
           <td>{{ recipe.ingredients }}</td>
           <td>{{ recipe.type }}</td>
           <td>{{ getCategoryTitle(recipe.id_categorie) }}</td>
-          <!-- Afficher le titre de la catégorie -->
           <td>
             <router-link
               :to="{ name: 'recipe-details', params: { id: recipe.id } }"
@@ -82,10 +82,6 @@
     <div v-if="!loading && !filteredRecipes.length" class="alert alert-warning">
       Aucune recette ne correspond à votre recherche.
     </div>
-
-    <div v-if="successMessage" class="mt-4 alert alert-success">
-      {{ successMessage }}
-    </div>
   </div>
 </template>
 
@@ -116,9 +112,7 @@ const filteredRecipes = computed(() => {
 });
 
 const getCategoryTitle = (categoryId) => {
-  const category = categories.value.find(
-    (cat) => cat.categorie_id === categoryId
-  );
+  const category = categories.value.find((cat) => cat.id === categoryId);
   return category ? category.title : "Catégorie inconnue";
 };
 

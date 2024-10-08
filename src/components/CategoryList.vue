@@ -56,8 +56,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="category in categories" :key="category.categorie_id">
-          <td>{{ category.categorie_id }}</td>
+        <tr v-for="category in categories" :key="category.id">
+          <td>{{ category.id }}</td>
           <td>{{ category.title }}</td>
           <td class="text-center">
             <button @click="viewCategoryDetails(category)" class="btn btn-outline-info me-2" title="Voir les détails">
@@ -66,7 +66,7 @@
             <button @click="editCategory(category)" class="btn btn-outline-success me-2" title="Modifier">
               <i class="fas fa-edit"></i>
             </button>
-            <button @click="deleteCategory(category.categorie_id)" class="btn btn-outline-danger" title="Supprimer">
+            <button @click="deleteCategory(category.id)" class="btn btn-outline-danger" title="Supprimer">
               <i class="fas fa-trash"></i>
             </button>
           </td>
@@ -81,7 +81,7 @@
           <button type="button" class="btn-close" @click="closeCategoryDetails"></button>
         </div>
         <div class="modal-body">
-          <p><strong>ID:</strong> {{ selectedCategory.categorie_id }}</p>
+          <p><strong>ID:</strong> {{ selectedCategory.id }}</p>
           <p><strong>Nom:</strong> {{ selectedCategory.title }}</p>
         </div>
         <div class="modal-footer">
@@ -109,7 +109,8 @@ const showForm = ref(false);
 
 const fetchCategories = async () => {
   await categoryStore.fetchCategories();
-  categories.value = categoryStore.categories;
+  // Trier les catégories par ID
+  categories.value = categoryStore.categories.sort((a, b) => a.id - b.id);
 };
 
 const handleAddCategory = async () => {
@@ -117,6 +118,10 @@ const handleAddCategory = async () => {
     await categoryStore.addCategory(newCategory.value);
     successMessage.value = 'Catégorie ajoutée avec succès!';
     errorMessage.value = '';
+
+    // Ajout de la nouvelle catégorie en haut du tableau
+    categories.value.unshift(newCategory.value);
+
     resetForm();
     await fetchCategories();
     clearMessages();
@@ -131,8 +136,8 @@ const handleAddCategory = async () => {
 const editCategory = (category) => {
   newCategory.value = { ...category };
   isEditing.value = true;
-  editingCategoryId.value = category.categorie_id;
-  showForm.value = true; // Afficher le formulaire lors de la modification
+  editingCategoryId.value = category.id;
+  showForm.value = true;
 };
 
 const handleUpdateCategory = async () => {
@@ -143,7 +148,7 @@ const handleUpdateCategory = async () => {
     resetForm();
     await fetchCategories();
     clearMessages();
-    showForm.value = false; // Masquer le formulaire après la mise à jour
+    showForm.value = false;
   } catch (error) {
     errorMessage.value = 'Erreur lors de la mise à jour de la catégorie.';
     successMessage.value = '';
@@ -167,39 +172,37 @@ const deleteCategory = async (categoryId) => {
   }
 };
 
+const viewCategoryDetails = (category) => {
+  selectedCategory.value = category; 
+  showCategoryDetails.value = true; 
+};
+
+const closeCategoryDetails = () => {
+  showCategoryDetails.value = false; 
+};
+
 const cancelEdit = () => {
   resetForm();
-  isEditing.value = false;
-  showForm.value = false; // Masquer le formulaire en cas d'annulation
+  isEditing.value = false; 
+  showForm.value = false; 
 };
 
 const resetForm = () => {
   newCategory.value = { title: '' };
-  isEditing.value = false;
-  editingCategoryId.value = null;
+  errorMessage.value = '';
+  successMessage.value = '';
 };
 
 const clearMessages = () => {
   setTimeout(() => {
-    successMessage.value = '';
     errorMessage.value = '';
+    successMessage.value = '';
   }, 3000);
 };
 
-const viewCategoryDetails = (category) => {
-  selectedCategory.value = { ...category };
-  showCategoryDetails.value = true;
-};
-
-const closeCategoryDetails = () => {
-  selectedCategory.value = {};
-  showCategoryDetails.value = false;
-};
-
-onMounted(async () => {
-  await fetchCategories();
-});
+onMounted(fetchCategories);
 </script>
+
 
 <style scoped>
 .category-details-overlay {
