@@ -34,10 +34,10 @@
       <div class="form-group">
         <label for="type">{{ $t("type") }}</label>
         <select v-model="recipe.type" id="type" class="form-control" required>
-          <option value="" disabled>{{ $t("selectType") }}</option>
-          <option value="appetizer">{{ $t("appetizer") }}</option>
-          <option value="mainCourse">{{ $t("mainCourse") }}</option>
-          <option value="dessert">{{ $t("dessert") }}</option>
+          <option value="" disabled>{{ $t('chose_type') }}</option>
+          <option value="entrée">{{ $t('entrée') }}</option>
+          <option value="plat">{{ $t('plat') }}</option>
+          <option value="dessert">{{ $t('dessert') }}</option>
         </select>
       </div>
 
